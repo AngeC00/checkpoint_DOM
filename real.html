@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>windowshopper</title>
+    <h1>BOUTIQUE EN LIGNE</h1>
+    <style> 
+    h1 { background-color: #00ffbf;
+        animation-direction: alternate-reverse;
+        
+    }
+
+    title {
+        background-color: #00ffbf;
+    }
+    
+body {
+            background-color: #00ffbf; /* Bleu */
+            margin: 0; /* Supprime les marges par défaut du navigateur */
+            padding: 0; /* Supprime les rembourrages par défaut du navigateur */
+            font-family: Arial, sans-serif; /* Utilise la police de caractères Arial ou sans-serif */
+        }
+        /* style des carte */
+        .cart-item {
+            display: flex;
+            margin-bottom: 10px;
+            background-color: aquamarine;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+            background-color: black;
+            background-position: 0cqmax;
+        }
+
+        /* Styles for buttons */
+        button {
+            padding: 5px 10px;
+    margin-right: 5px;
+    background-color: #18a599;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+            
+        }
+
+        /* Styles for total price */
+        .total-price {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-item">
+        <img src="item1.jpg" alt="Item 1">
+        <div class="item-details">
+            <h3>Item 1</h3>
+            <p>Price: $10</p>
+            <button class="like-btn">&#x2665;</button>
+            <button class="remove-btn">Remove</button>
+        </div>
+        <div class="quantity">
+            <button class="minus-btn">-</button>
+            <span class="quantity-value">1</span>
+            <button class="plus-btn">+</button>
+        </div>
+    </div>
+    <div class="cart-item">
+        <img src="item2.jpg" alt="Item 2">
+        <div class="item-details">
+            <h3>Item 2</h3>
+            <p>Price: $15</p>
+            <button class="like-btn">&#x2665;</button>
+            <button class="remove-btn">Remove</button>
+        </div>
+        <div class="quantity">
+            <button class="minus-btn">-</button>
+            <span class="quantity-value">1</span>
+            <button class="plus-btn">+</button>
+        </div>
+    </div>
+    <div class="total-price">
+        Total Price: $25
+    </div>
+
+    <script>
+        // Select all buttons
+        const plusButtons = document.querySelectorAll('.plus-btn');
+        const minusButtons = document.querySelectorAll('.minus-btn');
+        const likeButtons = document.querySelectorAll('.like-btn');
+        const removeButtons = document.querySelectorAll('.remove-btn');
+
+        // Select quantity value
+        const quantityValues = document.querySelectorAll('.quantity-value');
+
+        // Select total price
+        const totalPrice = document.querySelector('.total-price');
+
+        // Add event listeners for plus buttons
+        plusButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                let currentValue = parseInt(quantityValues[index].textContent);
+                quantityValues[index].textContent = currentValue + 1;
+                updateTotalPrice();
+            });
+        });
+
+        // Add event listeners for minus buttons
+        minusButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                let currentValue = parseInt(quantityValues[index].textContent);
+                if (currentValue > 1) {
+                    quantityValues[index].textContent = currentValue - 1;
+                    updateTotalPrice();
+                }
+            });
+        });
+
+        // Add event listeners for like buttons
+        likeButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('liked');
+            });
+        });
+
+        // Add event listeners for remove buttons
+        removeButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                button.parentElement.parentElement.remove();
+                updateTotalPrice();
+            });
+        });
+
+        // Function to update total price
+        function updateTotalPrice() {
+            let total = 0;
+            document.querySelectorAll('.cart-item').forEach((item, index) => {
+                let price = parseInt(item.querySelector('p').textContent.split('$')[1]);
+                let quantity = parseInt(quantityValues[index].textContent);
+                total += price * quantity;
+            });
+            totalPrice.textContent = `Total Price: $${total}`;
+        }
+    </script>
+</body>
+</html>
